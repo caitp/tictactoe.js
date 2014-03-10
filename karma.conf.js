@@ -1,6 +1,7 @@
 module.exports = function(config) {
   config.set({
     frameworks: ['jasmine'],
+    logLevel: config.LOG_INFO,
 
     reporters: ['dots', 'coverage'],
 
