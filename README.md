@@ -1,4 +1,4 @@
-# tictactoe.js
+#[tictactoe.js](http://github.com/caitp/tictactoe.js)
 
 This is the game logic for a jQueryTO 2014 demo, which has been quickly hacked together.
 
