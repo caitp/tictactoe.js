@@ -1,0 +1,32 @@
+{
+  "name": "tictactoe.js",
+  "version": "0.1.0",
+  "description": "A Tic-Tac-Toe game implemented in JS, just for fun",
+  "main": "tictactoe.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/caitp/tictactoe.js"
+  },
+  "keywords": [
+    "Game",
+    "Interactive",
+    "Tic-Tac-Toe"
+  ],
+  "author": "Caitlin Potter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/caitp/tictactoe.js/issues"
+  },
+  "homepage": "https://github.com/caitp/tictactoe.js",
+  "devDependencies": {
+    "karma-script-launcher": "~0.1.0",
+    "karma-chrome-launcher": "~0.1.2",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-jasmine": "~0.1.5",
+    "karma": "~0.10.9",
+    "karma-coverage": "~0.2.0"
+  }
+}
