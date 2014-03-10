@@ -2,10 +2,13 @@ language: node_js
 node_js:
   - 0.1
 
+env:
+  global:
+    secure: j/xYem7h15gy4Qz2Vv7YliTnV74a1aHTcVnbjiTFWvKMFSG1uo0nEcgWpuAe9EbyEi71dDdT4My5frcrgJz53qRulRSIZMPS/p1wRGY+hWDnf4BwZZad3pU8t576sSmlt8ER1HkW6N3CThsPxI/xv1auMGKp45FfFOqs6FOpW88=
+
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 
 script:
   - karma start --single-run --browsers Firefox
-

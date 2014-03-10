@@ -13,9 +13,13 @@ module.exports = function(config) {
       'tictactoe.js': ['coverage']
     },
 
-    coverageReporters: {
-      reporters: ['text', 'lcov'],
-      dir: 'coverage/'
+    coverageReporter: {
+      reporters: [{
+        type: 'text' 
+      }, {
+        type: 'lcov',
+        dir: 'coverage/'
+      }],
     },
 
     browsers: ['Chrome']
@@ -35,8 +39,11 @@ module.exports = function(config) {
 
   if (process.argv.indexOf('--debug') >= 0) {
     arrayRemove(config.reporters, 'coverage');
+    arrayRemove(config.reporters, 'coveralls');
     for (var key in config.preprocessors) {
       arrayRemove(config.preprocessors[key], 'coverage');
     }
+  } else if (process.env.TRAVIS) {
+    config.reporters.push('coveralls');
   }
 };
