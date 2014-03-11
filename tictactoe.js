@@ -25,6 +25,10 @@ function main() {
     return ('' + str).replace(LEADING_SPACE, '').replace(TRAILING_SPACE, '');
   }
 
+  function off(board, x, y) {
+    return (x < 0 || y < 0 || x >= board.width || y >= board.width);
+  }
+
   function get(board, x, y) {
     var index = (y * board.width) + x;
     return board.state[index] || null;
@@ -161,6 +165,12 @@ function main() {
       return moves;
     },
 
+    // Private method to allow subclasses to also make use of the event
+    // emitting utilities.
+    _emit: function(name, data) {
+      return emit.apply(null, [this, name].concat(Array.prototype.slice.call(arguments, 1)));
+    },
+
     // register an event handler
     on: function(events, handler) {
       if (typeof events === "string") events = trim(events).split(/\s+/);
@@ -195,6 +205,7 @@ function main() {
       return this;
     }
   };
+  hidden(Board.prototype._emit);
   freeze(Board.prototype);
 
   function Move(player, x, y) {

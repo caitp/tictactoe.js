@@ -187,6 +187,15 @@ describe('Board', function() {
     });
 
 
+    it('should emit events with private _emit method', function() {
+      var callback = jasmine.createSpy('custom');
+      board.on('custom', callback);
+      board._emit('custom', 123);
+      expect(callback.callCount).toBe(1);
+      expect(callback).toHaveBeenCalledWith(jasmine.any(Object), 123);
+    });
+
+
     it('should register event handlers properly', function() {
       var callback = jasmine.createSpy('move/reset/victory/badmove');
       board.on('move reset victory badmove', callback);
