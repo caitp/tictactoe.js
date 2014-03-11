@@ -255,5 +255,15 @@ describe('Board', function() {
       expect(callback).toHaveBeenCalled();
       expect(callback2).toHaveBeenCalled();
     });
+
+
+    it('should emit badmove event with player, x position and y position data', function() {
+      var callback = jasmine.createSpy('badmove');
+      board.on('badmove', callback);
+      board.move('X', 0, 0);
+      board.move('Y', 0, 0);
+      expect(callback.callCount).toBe(1);
+      expect(callback).toHaveBeenCalledWith(jasmine.any(Object), 'Y', 0, 0);
+    });
   });
 });

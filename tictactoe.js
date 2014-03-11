@@ -126,7 +126,7 @@ function main() {
 
         return true;
       }
-      emit(this, 'badmove', x, y);
+      emit(this, 'badmove', player, x, y);
       return false;
     },
 
