@@ -18,7 +18,16 @@ function main() {
       writable: true
     });
   }
-
+  var hasOwnProperty = Object.prototype.hasOwnProperty;
+  function hasOwn(obj, prop) {
+    return hasOwnProperty.call(obj, prop);
+  }
+  var ownProps = Object.getOwnPropertyNames || function(obj) {
+    var props = [];
+    for (var prop in obj) {
+      if (hasOwn(obj, prop)) props.push(prop);
+    }
+  }
   var LEADING_SPACE = /^\s+/;
   var TRAILING_SPACE = /\s+$/;
   function trim(str) {
@@ -97,12 +106,22 @@ function main() {
       return !(get(this, x, y) instanceof Move);
     },
 
-    move: function(player, x, y) {
-      if (arguments.length < 3) throw new Error("Arguments for `player`, `x` and `y` are required");
+    move: function(player, x, y, extend) {
+      if (arguments.length < 3) {
+        if (typeof player === "object" && hasOwn(player, 'player') &&
+            hasOwn(player, 'x') && hasOwn(player, 'y')) {
+          extend = player;
+          player = extend.player;
+          x = extend.x;
+          y = extend.y;
+        } else {
+          throw new Error("Arguments for `player`, `x` and `y` are required");
+        }
+      }
       if (x < 0 || y < 0 || x >= this.width || y >= this.width)
         throw new Error("Index out of range");
       if (this.isAvailable(x, y)) {
-        var item = new Move(player, x, y);
+        var item = new Move(player, x, y, extend);
         if (this._historyHead === null) {
           this._historyHead = this._historyTail = item;
         } else {
@@ -207,11 +226,21 @@ function main() {
   };
   hidden(Board.prototype._emit);
 
-  function Move(player, x, y) {
+  function Move(player, x, y, extend) {
     this.player = player;
     this.x = x;
     this.y = y;
     this.time = new Date();
+    if (extend && typeof extend === "object") {
+      var own = ownProps(extend);
+      for (var i = 0, ii = own.length; i < ii; ++i) {
+        var prop = own[i];
+        if (prop !== 'player' && prop !== 'x' && prop !== 'y') {
+          this[prop] = extend[prop];
+          readonly(this, prop, this[prop]);
+        }
+      }
+    }
     this._previousMove = this._nextMove = null;
     readonly(this, 'player', player);
     readonly(this, 'x', x);
