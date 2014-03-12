@@ -206,7 +206,6 @@ function main() {
     }
   };
   hidden(Board.prototype._emit);
-  freeze(Board.prototype);
 
   function Move(player, x, y) {
     this.player = player;

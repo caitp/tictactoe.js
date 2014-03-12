@@ -266,4 +266,24 @@ describe('Board', function() {
       expect(callback).toHaveBeenCalledWith(jasmine.any(Object), 'Y', 0, 0);
     });
   });
+
+
+  it('should support subclasses overriding methods', function() {
+    var callback = jasmine.createSpy("move");
+    function SubBoard() {
+      Board.call(this);
+    }
+    SubBoard.prototype = Object.create(Board.prototype);
+    SubBoard.prototype.move = function() {
+      callback("SubBoard#move()");
+    }
+    var board = new SubBoard();
+    expect(board instanceof Board).toBe(true);
+    expect(board instanceof SubBoard).toBe(true);
+    expect(function() {
+      board.move();
+    }).not.toThrow();
+    expect(callback.callCount).toBe(1);
+    expect(callback).toHaveBeenCalledWith("SubBoard#move()");
+  });
 });
