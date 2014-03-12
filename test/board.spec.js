@@ -30,6 +30,38 @@ describe('Board', function() {
     });
 
 
+    it('should allow first property to be an object containing `player`, `x`, and `y`', function() {
+      expect(function() {
+        board.move({
+          player: "X",
+          x: 0,
+          y: 0
+        });
+      }).not.toThrow();
+      expect(board.state[0].player).toBe("X");
+    });
+
+
+    it('should allow extra properties to be added to a move via the extend object', function() {
+      var date = new Date();
+      expect(function() {
+        board.move({
+          name: "caitp",
+        }, 0, 0, {
+          time: date,
+          marker: "X"
+        });
+      }).not.toThrow();
+      expect(board.state[0].player).toEqual({
+        name: "caitp"
+      });
+      expect(board.state[0].marker).toBe("X");
+      expect(board.state[0].time).toBe(date);
+      expect(board.state[0].x).toBe(0);
+      expect(board.state[0].y).toBe(0);
+    });
+
+
     it('should return true when moving to unoccupied position within bounds', function() {
       expect(board.move("X", 0, 0)).toBe(true);
     });
